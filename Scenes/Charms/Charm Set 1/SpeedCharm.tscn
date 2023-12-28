@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://cw4m6q4scxalq"]
+[gd_scene load_steps=2 format=3 uid="uid://cw4m6q4scxalq"]
+
+[ext_resource type="Script" path="res://Scripts/Charms/Charm Set 1/SpeedCharm.gd" id="1_pvxs5"]
 
 [node name="SpeedCharm" type="Node2D"]
+script = ExtResource("1_pvxs5")
