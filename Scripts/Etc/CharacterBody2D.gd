@@ -1,14 +1,26 @@
 extends CharacterBody2D
-class_name PrimaryInputComponent ## Use in all classes. Make secondary input components for unique attacks and abilities. 
+
+
+signal activate_charm_1
+signal activate_charm_2
+signal activate_charm_3
+
+signal deactivate_charm_1
+signal deactivate_charm_2
+signal deactivate_charm_3
+
+var speedcharm = preload("res://Scenes/Charms/Charm Set 1/SpeedCharm.tscn")
+
 #region Variables
 @export var Cbody: CharacterBody2D ## Set the characterbody here. Usually the parent.
 @export var Camera: Camera2D ## Set the camera here. 
 #Movement variables.
 #V--------------------V
 const FRICTION: float = 3200
-const ACCEL_SPEED: float = 1600.0
-const JUMP_VELOCITY: float = -800.0
+var ACCEL_SPEED: float = 1600.0
+var JUMP_VELOCITY: float = -800.0
 var jump_over: bool = false
+var max_jump_vel: float = -700
 const MAX_RUN_SPEED: float = 900.0
 var max_speed: float =  MAX_RUN_SPEED
 #----------------------
@@ -21,15 +33,30 @@ const CAM_LIMIT: float = 300
 
 #Charm Variables
 #V--------------------V
-var current_charm: String
+var current_charm: int = 0
 #----------------------
 
 #----------------------
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
 #endregion
 func _physics_process(delta):
+	if Input.is_action_just_pressed("Switch Charm") && is_on_floor():
+		current_charm += 1
+		$Label.text= str(current_charm)
+		if current_charm == 1:
+			deactivate_charm_3.emit()
+			activate_charm_1.emit() #Might change this to be numbered later on.
+		elif current_charm == 2:
+			activate_charm_2.emit()
+			deactivate_charm_1.emit()
+		elif current_charm == 3:
+			activate_charm_3.emit()
+			deactivate_charm_2.emit()
+			current_charm = 0
+		#var charm = speedcharm.instantiate()
+		#add_child(charm)
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -39,10 +66,8 @@ func _physics_process(delta):
 		jump_over = false
 		velocity.y =  JUMP_VELOCITY
 	if Input.is_action_pressed("Jump"):
-		print(velocity.y)
-		if velocity.y >= -700:
+		if velocity.y >= max_jump_vel:
 			if jump_over == false:
-				print("jover")
 				velocity.y -= velocity.y / 6
 				jump_over = true
 		else:
@@ -74,3 +99,5 @@ func _physics_process(delta):
 		
 	#print(other)
 	move_and_slide()
+
+

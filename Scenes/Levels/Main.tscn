@@ -1,32 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://dokwctukgcip6"]
+[gd_scene load_steps=7 format=3 uid="uid://dokwctukgcip6"]
 
-[ext_resource type="Script" path="res://Scripts/Etc/CharacterBody2D.gd" id="1_6dd8r"]
 [ext_resource type="Texture2D" uid="uid://66tebmytw0k5" path="res://icon.svg" id="2_k0l51"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wk7wt"]
-size = Vector2(144, 128)
+[ext_resource type="PackedScene" uid="uid://cs6jvu8tdfslj" path="res://Scenes/ETC/Character.tscn" id="2_ug36j"]
+[ext_resource type="Texture2D" uid="uid://cwyhuan1272hp" path="res://Assets/Icon.png" id="3_ngtux"]
+[ext_resource type="Script" path="res://Scenes/Levels/Area2D.gd" id="3_t8r8e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4kl4"]
 size = Vector2(3548, 218)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ylm6"]
+size = Vector2(140, 160)
+
 [node name="Node2D" type="Node2D"]
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-script = ExtResource("1_6dd8r")
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-texture = ExtResource("2_k0l51")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-visible = false
-position = Vector2(2, 0)
-shape = SubResource("RectangleShape2D_wk7wt")
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-zoom = Vector2(0.5, 0.5)
-drag_vertical_enabled = true
-drag_top_margin = 1.0
-drag_right_margin = 1.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -39,3 +24,23 @@ texture = ExtResource("2_k0l51")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(494, 629)
 shape = SubResource("RectangleShape2D_k4kl4")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("2_ug36j")]
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(540, 7)
+script = ExtResource("3_t8r8e")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture_filter = 1
+position = Vector2(2892, -92)
+scale = Vector2(10, 10)
+texture = ExtResource("3_ngtux")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(2892, -89)
+shape = SubResource("RectangleShape2D_2ylm6")
+
+[connection signal="area_entered" from="Area2D" to="Area2D" method="_on_area_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
