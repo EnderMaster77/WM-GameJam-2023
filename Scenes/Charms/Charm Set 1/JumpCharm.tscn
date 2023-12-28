@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [gd_scene load_steps=2 format=3 uid="uid://bv4q66u8xxuy"]
+=======
+[gd_scene load_steps=2 format=3 uid="uid://c1a0fvwbpk4no"]
+>>>>>>> speedcharm
 
 [ext_resource type="Script" path="res://Scripts/Charms/Charm Set 1/JumpCharm.gd" id="1_qovtv"]
 
