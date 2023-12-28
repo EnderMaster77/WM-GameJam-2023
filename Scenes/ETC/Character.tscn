@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cs6jvu8tdfslj"]
+
+[ext_resource type="Script" path="res://Scripts/Etc/CharacterBody2D.gd" id="1_ki4xm"]
+[ext_resource type="Texture2D" uid="uid://66tebmytw0k5" path="res://icon.svg" id="2_t8wh2"]
+[ext_resource type="PackedScene" uid="uid://cw4m6q4scxalq" path="res://Scenes/Charms/Charm Set 1/SpeedCharm.tscn" id="3_gnp5t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wk7wt"]
+size = Vector2(144, 128)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_ki4xm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_t8wh2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_wk7wt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+drag_vertical_enabled = true
+drag_top_margin = 1.0
+drag_right_margin = 1.0
+
+[node name="Label" type="Label" parent="."]
+offset_left = -82.0
+offset_top = -101.0
+offset_right = 84.0
+offset_bottom = -78.0
+text = "Current Charm: None"
+
+[node name="SpeedCharm" parent="." instance=ExtResource("3_gnp5t")]
